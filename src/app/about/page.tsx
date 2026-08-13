@@ -1,0 +1,3 @@
+import type { Metadata } from 'next'
+export const metadata:Metadata={title:'About'}
+export default function AboutPage(){return <main className="page shell about-page"><p className="eyebrow">About Altus</p><h1>For people who think<br/><em>beyond the obvious.</em></h1><div className="about-copy"><p>Altus is an independent digital media company following the people, ideas and movements shaping a more ambitious future for Africa.</p><p>We believe better information makes better decisions. Our work is editorially independent, beautifully considered, and made to be genuinely useful.</p></div></main>}

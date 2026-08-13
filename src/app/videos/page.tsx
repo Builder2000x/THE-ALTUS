@@ -1,0 +1,7 @@
+import type { Metadata } from 'next'
+import { getPublishedSiteVideos } from '@/lib/site-posts'
+import { ALTUS_YOUTUBE_URL, getLatestYouTubeVideos } from '@/lib/youtube'
+import { VideoCard } from '@/components/ContentCards'
+import NewsletterForm from '@/components/NewsletterForm'
+export const metadata:Metadata={title:'Videos',description:'Altus conversations and visual reporting.'}
+export default async function VideosPage(){const [siteVideos,youtubeVideos]=await Promise.all([getPublishedSiteVideos(),getLatestYouTubeVideos()]);const feed=[...siteVideos,...youtubeVideos].sort((a,b)=>new Date(b.publishedAt).getTime()-new Date(a.publishedAt).getTime());return <main className="page shell"><header className="page-head"><p className="eyebrow">Altus on screen</p><h1>Watch the ideas<br/><em>take shape.</em></h1><p>Conversations and stories built to travel further than the feed.</p></header>{feed.length?<div className="video-grid big-video-grid">{feed.map(v=><VideoCard video={v} key={v.id}/>)}</div>:<section className="archive-empty"><p className="eyebrow">The channel is warming up</p><h2>The first episode<br/><em>is on its way.</em></h2><p>New uploads from the Altus YouTube channel will appear here automatically.</p><a className="text-link" href={ALTUS_YOUTUBE_URL} target="_blank" rel="noreferrer">Visit the Altus YouTube channel</a></section>}<section className="inline-signup"><div><p className="eyebrow">Don’t miss an episode</p><h2>Stay close to the conversation.</h2></div><NewsletterForm compact/></section></main>}

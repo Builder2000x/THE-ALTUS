@@ -1,0 +1,11 @@
+import type { Metadata } from 'next'
+import { notFound } from 'next/navigation'
+import { mediaUrl } from '@/lib/content'
+import { getPublishedSitePost } from '@/lib/site-posts'
+import { InArticleAd } from '@/components/AdSlot'
+import NewsletterForm from '@/components/NewsletterForm'
+
+type Props = { params: Promise<{ slug: string }> }
+async function findArticle(slug: string) { return getPublishedSitePost(slug) }
+export async function generateMetadata({ params }: Props): Promise<Metadata> { const article = await findArticle((await params).slug); return article ? { title: article.title, description: article.excerpt, alternates: { canonical: `/news/${article.slug}` }, openGraph: { type: 'article', publishedTime: article.publishedAt, authors: [article.author] } } : { title: 'Article not found' } }
+export default async function ArticlePage({ params }: Props) { const article = await findArticle((await params).slug); if (!article) notFound(); return <main className="article-page"><header className="article-header shell"><div><p className="eyebrow">{article.category} · {new Date(article.publishedAt).toLocaleDateString('en', { month: 'long', day: 'numeric', year: 'numeric' })}</p><h1>{article.title}</h1><p className="article-subtitle">{article.subtitle}</p><p className="byline">Words by {article.author}</p></div></header><div className="article-image shell" style={{ backgroundImage: `url(${mediaUrl(article.image)})` }} /><article className="article-body shell"><div className="article-prose">{article.body.map((paragraph, index) => <p key={index}>{paragraph}</p>)}<InArticleAd /><h2>What this means</h2><p>The work of building is never finished. Altus follows the people, the ideas and the moments that reveal where the future is taking shape.</p></div><aside className="article-side"><p className="eyebrow">The daily brief</p><p>Five minutes every morning. Everything you need to know. Nothing you do not.</p><NewsletterForm compact /></aside></article></main> }

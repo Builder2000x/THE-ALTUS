@@ -1,0 +1,15 @@
+# Dependencies and framework output
+node_modules/
+.next/
+.next-build*/
+out/
+
+# Local and deployment secrets
+.env
+.env.*
+!.env.example
+**/.env.local
+
+# Local verification artifacts
+audit-*.png
+*.log
