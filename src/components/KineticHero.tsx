@@ -27,7 +27,7 @@ export default function KineticHero() {
     <section className="expedition-hero" ref={ref}>
       <motion.div
         className="expedition-media"
-        initial={reduceMotion ? false : { clipPath: 'inset(0 0 0 100%)' }}
+        initial={false}
         animate={{ clipPath: 'inset(0 0 0 0%)' }}
         transition={{ duration: reduceMotion ? 0 : 1.05, delay: reduceMotion ? 0 : 0.08, ease: [0.77, 0, 0.175, 1] }}
         style={{ y: mediaY, scale: mediaScale }}

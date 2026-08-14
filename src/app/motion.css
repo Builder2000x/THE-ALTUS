@@ -67,3 +67,33 @@ html,body{background:#fcfbf8!important}.site-header{background:linear-gradient(t
 .footer-grid{grid-template-columns:1.05fr 1fr .72fr}.footer-socials{align-self:start}.social-link-list{display:flex;flex-wrap:wrap;gap:9px;margin-top:17px}.social-link-list a{width:35px;height:35px;display:grid;place-items:center;border:1px solid rgba(77,27,22,.28);border-radius:50%;color:#2c1b18;transition:transform .25s var(--motion-out),background .25s var(--motion-out),color .25s var(--motion-out),border-color .25s var(--motion-out)}.social-link-list svg{width:16px;height:16px}.social-link-list a:hover{background:#9f251d;color:#fff8f3;border-color:#9f251d;transform:translateY(-3px)}.social-link-list a:focus-visible{outline:3px solid #9f251d;outline-offset:3px}@media(max-width:720px){.footer-grid{grid-template-columns:1fr}.footer-socials{margin-top:-7px}}
 @media(prefers-reduced-motion:reduce){.horizon-glow{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.150'/%3E%3C/svg%3E"),radial-gradient(101% 49% at 50% 100%,#fc8279 0%,#fb6a60 23.8%,#fda096 51.4%,#f52929 79%,rgba(245,41,41,0) 91%),radial-gradient(42.42% 18.62% at 50% 100%,rgba(252,158,152,.3672) 0%,rgba(251,106,96,.1428) 38%,rgba(251,106,96,0) 72%),radial-gradient(53.53% 28.42% at 50% 100%,rgba(253,160,150,.1326) 0%,rgba(253,160,150,0) 80%)}}
 .admin-shell{width:min(100% - 48px,1160px);margin:auto;padding:160px 0 110px}.admin-head{display:flex;justify-content:space-between;align-items:end;gap:35px;margin-bottom:50px}.admin-head h1,.admin-card h1{font-family:var(--serif);font-size:clamp(58px,8vw,104px);font-weight:400;line-height:.82;letter-spacing:-.075em;margin:18px 0}.admin-head>div>p:last-child,.admin-card>p{color:var(--muted);font-size:13px}.admin-card{border:1px solid var(--line);background:rgba(255,255,255,.42);padding:32px}.admin-shell>.admin-card{max-width:560px;margin:0 auto}.admin-form,.editor-main{display:grid;gap:18px}.admin-card label{display:grid;gap:8px;font-size:10px;text-transform:uppercase;letter-spacing:.12em;font-weight:700;color:var(--muted)}.admin-card input,.admin-card textarea,.admin-card select{width:100%;border:1px solid var(--line);background:#fffdf9;padding:13px;color:var(--ink);font:inherit;font-size:14px;text-transform:none;letter-spacing:normal;outline-color:#bd4f30}.admin-card textarea{resize:vertical;line-height:1.55}.admin-card .story-editor{font-family:var(--serif);font-size:18px}.editor-grid{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:28px;align-items:start}.editor-side{display:grid;gap:18px;position:sticky;top:25px}.editor-side>p{font-size:12px;line-height:1.65;color:var(--muted);margin:0}.admin-signout{border:0;background:none;border-bottom:1px solid var(--ink);padding:0 0 4px;font:inherit;font-weight:700;font-size:12px;cursor:pointer}.admin-message{font-size:13px!important;color:#8f3f2b!important;margin:0}@media(max-width:720px){.admin-shell{width:min(100% - 32px,1160px);padding:130px 0 70px}.admin-head,.editor-grid{display:block}.admin-head{margin-bottom:30px}.admin-signout{margin-top:20px}.editor-side{position:static;margin-top:20px}.admin-card{padding:22px}}
+
+/* Keep the hero's cinematic layers intact and leave a clear gap before the values bar. */
+.expedition-hero{padding-bottom:104px}
+.expedition-media{z-index:0}
+.expedition-atmosphere{z-index:0}
+.expedition-panel{z-index:1}
+.hero-values{position:absolute;inset:auto 0 0;z-index:2}
+.expedition-content{padding-bottom:132px}
+.expedition-signup{margin-top:16px}
+
+/* The mascot occupies its own reserved column, so the signup stays clear and usable. */
+.home-subscribe{min-height:470px}
+.home-subscribe .split-subscribe{position:static;grid-template-columns:minmax(0,1fr) minmax(300px,400px);column-gap:clamp(48px,7vw,112px);padding-right:clamp(235px,24vw,330px)}
+.home-subscribe .split-subscribe>:not(.newsletter-mascot){position:relative;z-index:2}
+.home-subscribe h2 em{color:rgba(255,250,244,.68)}
+.home-subscribe .newsletter-form{position:relative;z-index:3}
+.newsletter-mascot{z-index:1;width:clamp(230px,22vw,300px);right:max(24px,calc((100% - min(100% - 48px,1160px))/2));bottom:20px}
+
+@media(max-width:980px){
+  .home-subscribe{min-height:0}
+  .home-subscribe .split-subscribe{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:36px;padding-right:0}
+  .newsletter-mascot{width:200px;right:18px;bottom:16px;opacity:.28}
+}
+
+@media(max-width:720px){
+  .expedition-content{padding-bottom:80px}
+  .expedition-signup{margin-top:20px}
+  .home-subscribe .split-subscribe{display:grid;grid-template-columns:1fr;padding-right:0}
+  .newsletter-mascot{width:132px;right:8px;bottom:12px;opacity:.24}
+}
