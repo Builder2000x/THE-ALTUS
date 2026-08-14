@@ -1,3 +1,3 @@
 import type { Metadata } from 'next'
-export const metadata:Metadata={title:'Your account'}
+export const metadata:Metadata={title:'Your account',robots:{index:false,follow:false}}
 export default function Account(){return <main className="checkout-page shell"><p className="eyebrow">Customer library</p><h1>Your purchases,<br/><em>kept private.</em></h1><p>Account authentication and download entitlements connect here when the commerce provider is selected. Newsletter subscriptions remain independently managed by Beehiiv.</p><div className="checkout-placeholder"><strong>Account connection pending</strong><span>Signed-in customers will see orders and time-limited secure downloads here.</span></div></main>}
