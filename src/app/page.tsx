@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import type { Metadata } from 'next'
 import { ArrowUpRight } from 'lucide-react'
 import { getPublishedBeehiivPosts } from '@/lib/beehiiv'
 import { getPublishedSitePosts, getPublishedSiteVideos } from '@/lib/site-posts'
@@ -11,6 +12,45 @@ import NewsletterForm from '@/components/NewsletterForm'
 import MascotMoment from '@/components/MascotMoment'
 import SignalTicker from '@/components/SignalTicker'
 
+export const metadata: Metadata = { alternates: { canonical: '/' } }
+
+const identityJsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': 'https://altusnews.com/#organization',
+      name: 'Altus News',
+      alternateName: 'Altus',
+      url: 'https://altusnews.com',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://altusnews.com/brand/altus-logo.png',
+        contentUrl: 'https://altusnews.com/brand/altus-logo.png',
+        width: 1255,
+        height: 1255,
+      },
+      sameAs: [
+        'https://www.facebook.com/altusnewss',
+        'https://www.instagram.com/altusnewss/',
+        'https://x.com/AltusNewss',
+        'https://bsky.app/profile/altusnews.bsky.social',
+        'https://www.tiktok.com/@altusnews',
+        'https://www.youtube.com/channel/UCsr7W63vA711gx8cQnJ05ig',
+        'https://newsletter.altusnews.com',
+      ],
+    },
+    {
+      '@type': 'WebSite',
+      '@id': 'https://altusnews.com/#website',
+      url: 'https://altusnews.com',
+      name: 'Altus News',
+      alternateName: ['Altus', 'AltusNews.com'],
+      publisher: { '@id': 'https://altusnews.com/#organization' },
+    },
+  ],
+}
+
 export default async function Home() {
   const [sitePosts, beehiivPosts, siteVideos, youtubeVideos] = await Promise.all([getPublishedSitePosts(), getPublishedBeehiivPosts(), getPublishedSiteVideos(), getLatestYouTubeVideos()])
   const feed = [...sitePosts, ...beehiivPosts].sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
@@ -19,6 +59,7 @@ export default async function Home() {
   const videoFeed = [...siteVideos, ...youtubeVideos].sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
 
   return <main>
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(identityJsonLd).replace(/</g, '\\u003c') }} />
     <SignalTicker items={feed.map((article) => article.title)} />
     <KineticHero />
     {featured && <section className="shell featured-story"><Reveal className="section-label-row"><p className="eyebrow">The lead story</p><Link href="/news">All reporting <ArrowUpRight size={16} /></Link></Reveal><Reveal delay={.1}><ArticleCard article={featured} featured /></Reveal></section>}

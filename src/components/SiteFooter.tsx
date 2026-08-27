@@ -2,7 +2,6 @@ import Link from 'next/link'
 import Image from 'next/image'
 import logo from '../../transparent logo.png'
 import NewsletterForm from './NewsletterForm'
-import HorizonGlow from './HorizonGlow'
 
 type SocialName = 'Facebook' | 'Instagram' | 'X' | 'Bluesky' | 'TikTok' | 'YouTube'
 
@@ -27,11 +26,10 @@ function SocialIcon({ name }: { name: SocialName }) {
 export default function SiteFooter() {
   return (
     <footer className="site-footer">
-      <HorizonGlow />
       <div className="shell footer-grid">
         <div>
           <Image className="footer-logo" src={logo} alt="Altus News" />
-          <p className="footer-copy">Independent ideas, considered reporting, and useful tools for the people moving Africa forward.</p>
+          <p className="footer-copy">Independent ideas, considered reporting, and useful tools for people making sense of a changing world.</p>
         </div>
         <div>
           <p className="eyebrow">The weekly brief</p>

@@ -24,7 +24,7 @@ export async function getLatestYouTubeVideos(): Promise<Video[]> {
     const feed = await response.text()
     const entries = feed.match(/<entry>[\s\S]*?<\/entry>/gi) ?? []
 
-    return entries.slice(0, 12).flatMap((entry) => {
+    return entries.flatMap((entry) => {
       const id = tag(entry, 'yt:videoId')
       const title = tag(entry, 'title')
       const publishedAt = tag(entry, 'published')
