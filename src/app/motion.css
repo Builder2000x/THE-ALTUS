@@ -62,6 +62,11 @@
 .article-card.featured.newsletter-card .card-meta{margin-top:0}
 .article-card.featured.newsletter-card h3{margin:15px 0 14px;text-wrap:balance}
 .article-card.featured.newsletter-card .article-card-copy>p{max-width:42ch;text-wrap:pretty}
+.news-page .archive-layout{display:block}
+.news-page .archive-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:52px 22px}
+.news-page .archive-grid .article-card h3{font-size:clamp(24px,2vw,30px);line-height:1;text-wrap:balance}
+.news-page .archive-grid .article-card>p{font-size:12px;line-height:1.6;text-wrap:pretty}
+.news-page .archive-grid .card-meta{flex-wrap:wrap;row-gap:5px;margin-top:15px}
 .admin-cover-preview{width:100%;height:150px;object-fit:cover;border:1px solid var(--line);background:#eee8df}
 
 /* Soft Editorial White: a clean, neutral canvas without changing Altus accents. */
@@ -100,7 +105,10 @@ html,body{background:#fcfbf8!important}.site-header{background:linear-gradient(t
   .newsletter-mascot{width:200px;right:18px;bottom:16px;opacity:.28}
 }
 
+@media(max-width:1000px){.news-page .archive-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
 @media(max-width:720px){
+.news-page .archive-grid{grid-template-columns:1fr;gap:35px}
 .article-card.featured.newsletter-card>.article-card-copy{margin-top:18px}
   .expedition-content{padding-bottom:80px}
   .expedition-signup{margin-top:20px}

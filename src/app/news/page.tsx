@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import { getPublishedBeehiivPosts } from '@/lib/beehiiv'
 import { getPublishedSitePosts } from '@/lib/site-posts'
 import { ArticleCard } from '@/components/ContentCards'
-import { SidebarAd } from '@/components/AdSlot'
 import NewsHero from './NewsHero'
 import NewsReveal from './NewsReveal'
 import motionStyles from './NewsArchiveMotion.module.css'
@@ -26,7 +25,6 @@ export default async function NewsPage() {
       </NewsReveal>
       <div className="archive-layout">
         {feed.length ? <div className="archive-grid">{feed.map((article, index) => <NewsReveal className={motionStyles.cardReveal} delay={(index % 4) * 70} key={article.id}><ArticleCard article={article}/></NewsReveal>)}</div> : <NewsReveal><section className="archive-empty"><p className="eyebrow">The first edition is next</p><h2>The archive is<br/><em>waiting for the signal.</em></h2><p>Website articles and confirmed Beehiiv editions will appear here automatically.</p></section></NewsReveal>}
-        <SidebarAd/>
       </div>
     </section>
   </main>
