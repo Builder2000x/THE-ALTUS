@@ -7,6 +7,8 @@ import VideoHero from './VideoHero'
 import VideoReveal from './VideoReveal'
 import styles from './VideoPage.module.css'
 
+export const revalidate = 300
+
 export const metadata: Metadata = {
   title: 'Videos',
   description: 'Altus visual reporting and conversations on the forces shaping the world.',

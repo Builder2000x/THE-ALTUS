@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
-import { revalidatePath } from 'next/cache'
+import { revalidatePath, revalidateTag } from 'next/cache'
 
 const required = ['title', 'slug', 'excerpt', 'body', 'category', 'author'] as const
 const limits = { title: 180, slug: 180, subtitle: 240, excerpt: 500, body: 100_000, category: 80, author: 120, cover_image_url: 2_048, video_url: 2_048 } as const
@@ -35,6 +35,12 @@ export async function POST(request: Request) {
     if (error.code === '23505') return NextResponse.json({ error: 'That URL slug is already in use.' }, { status: 409 })
     return NextResponse.json({ error: error.message.includes('row-level security') ? 'This signed-in account is not approved as an Altus editor.' : 'The post could not be saved.' }, { status: 403 })
   }
-  if (status === 'published') { revalidatePath('/news'); revalidatePath('/videos'); revalidatePath(`/news/${values.slug}`); revalidatePath('/') }
+  if (status === 'published') {
+    // Expire the public data as well as the pages so a successful publish
+    // cannot keep serving the old cached collection or a cached missing slug.
+    revalidateTag(contentType === 'video' ? 'site-videos' : 'site-articles', { expire: 0 })
+    if (contentType === 'article') revalidateTag(`site-article:${values.slug}`, { expire: 0 })
+    revalidatePath('/news'); revalidatePath('/videos'); revalidatePath(`/news/${values.slug}`); revalidatePath('/'); revalidatePath('/sitemap.xml')
+  }
   return NextResponse.json({ message: status === 'published' ? `Published to Altus ${contentType === 'video' ? 'Videos' : 'News'}.` : 'Draft saved.' })
 }

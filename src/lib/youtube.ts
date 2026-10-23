@@ -19,7 +19,7 @@ const tag = (xml: string, name: string) => {
 
 export async function getLatestYouTubeVideos(): Promise<Video[]> {
   try {
-    const response = await fetch(`https://www.youtube.com/feeds/videos.xml?channel_id=${ALTUS_YOUTUBE_CHANNEL}`, { cache: 'no-store' })
+    const response = await fetch(`https://www.youtube.com/feeds/videos.xml?channel_id=${ALTUS_YOUTUBE_CHANNEL}`, { next: { revalidate: 300, tags: ['youtube-videos'] }, signal: AbortSignal.timeout(5_000) })
     if (!response.ok) return []
     const feed = await response.text()
     const entries = feed.match(/<entry>[\s\S]*?<\/entry>/gi) ?? []

@@ -7,6 +7,7 @@ import NewsReveal from './NewsReveal'
 import motionStyles from './NewsArchiveMotion.module.css'
 
 export const metadata: Metadata = { title: 'News archive', description: 'Reporting and ideas from Altus.', alternates: { canonical: '/news' } }
+export const revalidate = 300
 
 export default async function NewsPage() {
   const [beehiivPosts, sitePosts] = await Promise.all([getPublishedBeehiivPosts(), getPublishedSitePosts()])

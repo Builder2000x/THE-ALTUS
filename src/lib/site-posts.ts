@@ -19,15 +19,26 @@ export type SitePost = {
   created_at: string
 }
 
-function client() {
+function client(tag: string) {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL
   const key = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
   if (!url || !key) return null
-  return createClient(url, key, { auth: { persistSession: false } })
+  // This client reads published public content only. Authenticated editor
+  // requests use a separate, uncached client in the publishing route.
+  return createClient(url, key, {
+    auth: { persistSession: false },
+    global: {
+      fetch: (input, init) => fetch(input, {
+        ...init,
+        next: { revalidate: 300, tags: [tag] },
+        signal: AbortSignal.timeout(5_000),
+      }),
+    },
+  })
 }
 
 export async function getPublishedSitePosts(): Promise<Article[]> {
-  const supabase = client()
+  const supabase = client('site-articles')
   if (!supabase) return []
   const { data } = await supabase.from('posts').select('*').eq('status', 'published').eq('content_type', 'article').order('published_at', { ascending: false })
   return ((data ?? []) as SitePost[]).map((post, index) => ({
@@ -46,7 +57,7 @@ export async function getPublishedSitePosts(): Promise<Article[]> {
 }
 
 export async function getPublishedSitePost(slug: string): Promise<Article | undefined> {
-  const supabase = client()
+  const supabase = client(`site-article:${slug}`)
   if (!supabase) return undefined
   const { data } = await supabase.from('posts').select('*').eq('slug', slug).eq('status', 'published').eq('content_type', 'article').maybeSingle()
   if (!data) return undefined
@@ -55,7 +66,7 @@ export async function getPublishedSitePost(slug: string): Promise<Article | unde
 }
 
 export async function getPublishedSiteVideos(): Promise<Video[]> {
-  const supabase = client()
+  const supabase = client('site-videos')
   if (!supabase) return []
   const { data } = await supabase.from('posts').select('*').eq('status', 'published').eq('content_type', 'video').order('published_at', { ascending: false })
   return ((data ?? []) as SitePost[]).map((post, index) => ({ id: post.id, title: post.title, description: post.excerpt, publishedAt: post.published_at ?? post.created_at, youtubeUrl: post.video_url ?? '', thumbnail: post.cover_image_url ?? articleFallbackImages[index % articleFallbackImages.length], category: post.category }))
