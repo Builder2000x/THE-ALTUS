@@ -44,7 +44,7 @@ export default function KineticHero() {
             animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
             transition={{ duration: reduceMotion ? 0 : 0.42, delay: reduceMotion ? 0 : 0.26, ease: [0.16, 1, 0.3, 1] }}
           >
-            <Image src={logo} alt="Altus News" />
+            <Image src={logo} alt="Altus News" sizes="47px" />
             <span>The daily brief</span>
           </motion.div>
           <h1 aria-label="Ideas with altitude.">

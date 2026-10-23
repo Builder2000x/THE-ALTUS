@@ -28,7 +28,7 @@ export default function SiteFooter() {
     <footer className="site-footer">
       <div className="shell footer-grid">
         <div>
-          <Image className="footer-logo" src={logo} alt="Altus News" />
+          <Image className="footer-logo" src={logo} alt="Altus News" sizes="178px" />
           <p className="footer-copy">Independent ideas, considered reporting, and useful tools for people making sense of a changing world.</p>
         </div>
         <div>

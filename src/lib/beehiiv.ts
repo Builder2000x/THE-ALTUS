@@ -24,6 +24,8 @@ type BeehiivPostsPage = {
 async function getAllBeehiivPosts(apiKey: string, publicationId: string) {
   const posts: BeehiivPost[] = []
   const limit = 100
+  // Bound the entire pagination pass, including a slow upstream connection.
+  const signal = AbortSignal.timeout(8_000)
 
   for (let page = 1; page <= 100; page += 1) {
     const params = new URLSearchParams({
@@ -36,7 +38,7 @@ async function getAllBeehiivPosts(apiKey: string, publicationId: string) {
     })
     const response = await fetch(
       `https://api.beehiiv.com/v2/publications/${publicationId}/posts?${params}`,
-      { headers: { Authorization: `Bearer ${apiKey}` }, cache: 'no-store' },
+      { headers: { Authorization: `Bearer ${apiKey}` }, next: { revalidate: 300, tags: ['beehiiv-posts'] }, signal },
     )
     if (!response.ok) throw new Error(`Beehiiv posts request failed with ${response.status}`)
 

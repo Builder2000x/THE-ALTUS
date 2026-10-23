@@ -12,6 +12,7 @@ import MascotMoment from '@/components/MascotMoment'
 import SignalTicker from '@/components/SignalTicker'
 
 export const metadata: Metadata = { alternates: { canonical: '/' } }
+export const revalidate = 300
 
 const identityJsonLd = {
   '@context': 'https://schema.org',
